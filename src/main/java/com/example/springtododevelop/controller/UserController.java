@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/users")
+    @PostMapping
     public ResponseEntity<UserResponseDto> createUser(
         @RequestBody UserCreateRequestDto requestDto) {
 
@@ -35,7 +35,7 @@ public class UserController {
 
     }
 
-    @GetMapping("/users")
+    @GetMapping
     public ResponseEntity<List<UserResponseDto>> findAllUsers() {
 
         List<UserResponseDto> users = userService.findAllUsers();
