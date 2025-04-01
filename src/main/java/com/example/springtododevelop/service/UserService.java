@@ -52,4 +52,19 @@ public class UserService {
 
     }
 
+    /**
+     * DB에서 user_id 와 일치하는 유저 조회를 담당하는 메소드
+     *
+     * @param user_id 클라이언트 요청 유저 식별자
+     * @return 조회된 유저 정보가 담겨있는 {@link UserResponseDto} 객체
+     */
+    public UserResponseDto findById(Long user_id) {
+
+        Users findUser = userRepository.findByUserIdOrElseThrow(user_id);
+
+        return new UserResponseDto(findUser.getUserId(), findUser.getUsername(),
+            findUser.getEmail(), findUser.getCreatedAt(), findUser.getUpdatedAt());
+
+    }
+
 }
