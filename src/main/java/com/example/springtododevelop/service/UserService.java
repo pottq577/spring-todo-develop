@@ -86,7 +86,7 @@ public class UserService {
         String newPassword, String email) {
 
         Users findUser = userRepository.findByUserIdOrElseThrow(userId);
-        checkPasswordMatchByUserId(findUser, oldPassword);
+        validateUserPassword(findUser, oldPassword);
 
         if (username != null) {
             findUser.setUsername(username);
@@ -114,13 +114,19 @@ public class UserService {
     public void deleteUser(Long userId, UserDeleteRequestDto requestDto) {
 
         Users findUser = userRepository.findByUserIdOrElseThrow(userId);
-        checkPasswordMatchByUserId(findUser, requestDto.getPassword());
+        validateUserPassword(findUser, requestDto.getPassword());
 
         userRepository.deleteById(userId);
 
     }
 
-    private void checkPasswordMatchByUserId(Users user, String password) {
+    /**
+     * 유저의 비밀번호가 요청 비밀번호와 같은지 검증하는 메소드
+     *
+     * @param user     유저 정보가 담긴 {@link Users} 객체
+     * @param password 클라이언트 요청 비밀번호
+     */
+    private void validateUserPassword(Users user, String password) {
         if (!user.getPassword().equals(password)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "비밀번호가 일치하지 않습니다.");
         }
