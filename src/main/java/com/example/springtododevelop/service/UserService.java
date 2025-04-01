@@ -56,9 +56,9 @@ public class UserService {
     }
 
     /**
-     * DB에서 user_id 와 일치하는 유저 조회를 담당하는 메소드
+     * DB에서 userId 와 일치하는 유저 조회를 담당하는 메소드
      *
-     * @param user_id 클라이언트 요청 유저 식별자
+     * @param userId 클라이언트 요청 유저 식별자
      * @return 조회된 유저 정보가 담겨있는 {@link UserResponseDto} 객체
      */
     public UserResponseDto findById(Long userId) {
@@ -70,10 +70,19 @@ public class UserService {
 
     }
 
+    /**
+     * DB에서 userId와 일치하는 유저 정보 수정을 담당하는 메소드
+     *
+     * @param userId      유저 식별자
+     * @param username    변경할 이름
+     * @param oldPassword 이전 비밀번호
+     * @param newPassword 새로운 비밀번호
+     * @param email       변경할 이메일
+     * @return 수정된 유저 정보가 반영된 {@link UserResponseDto} 객체
+     */
     @Transactional
-    public UserResponseDto updateUser(Long userId, String username, String oldPassword,
-        String newPassword,
-        String email) {
+    public UserResponseDto updateUser(
+        Long userId, String username, String oldPassword, String newPassword, String email) {
 
         Users findUser = userRepository.findByUserIdOrElseThrow(userId);
 

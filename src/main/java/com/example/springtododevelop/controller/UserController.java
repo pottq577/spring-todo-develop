@@ -58,11 +58,24 @@ public class UserController {
 
     }
 
+    /**
+     * 유저 식별자에 해당하는 유저를 찾도록 요청하는 메소드
+     *
+     * @param userId 유저 식별자
+     * @return 유저 식별자에 해당하는 유저 정보가 담긴 {@link UserResponseDto} 객체
+     */
     @GetMapping("/{userId}")
     public ResponseEntity<UserResponseDto> findUserById(@PathVariable Long userId) {
         return new ResponseEntity<>(userService.findById(userId), HttpStatus.OK);
     }
 
+    /**
+     * 유저 식별자에 해당하는 유저를 수정하도록 요청하는 메소드
+     *
+     * @param userId     유저 식별자
+     * @param requestDto 클라이언트 요청 {@link UserUpdateRequestDto} 객체
+     * @return 수정이 완료된 유저 정보가 담긴 {@link UserResponseDto} 객체
+     */
     @PatchMapping("/{userId}")
     public ResponseEntity<UserResponseDto> updateUser(
         @PathVariable Long userId,
