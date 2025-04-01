@@ -1,7 +1,7 @@
 package com.example.springtododevelop.controller;
 
 import com.example.springtododevelop.dto.users.UserCreateRequestDto;
-import com.example.springtododevelop.dto.users.UserCreateResponseDto;
+import com.example.springtododevelop.dto.users.UserResponseDto;
 import com.example.springtododevelop.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,17 +19,17 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/users")
-    public ResponseEntity<UserCreateResponseDto> createUser(
+    public ResponseEntity<UserResponseDto> createUser(
         @RequestBody UserCreateRequestDto requestDto) {
 
-        UserCreateResponseDto userCreateResponseDto =
+        UserResponseDto userResponseDto =
             userService.createUser(
                 requestDto.getUsername(),
                 requestDto.getPassword(),
                 requestDto.getEmail()
             );
 
-        return new ResponseEntity<>(userCreateResponseDto, HttpStatus.CREATED);
+        return new ResponseEntity<>(userResponseDto, HttpStatus.CREATED);
 
     }
 

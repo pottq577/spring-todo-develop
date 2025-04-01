@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class UserCreateResponseDto {
+public class UserResponseDto {
 
     private final Long userId;
     private final String username;
