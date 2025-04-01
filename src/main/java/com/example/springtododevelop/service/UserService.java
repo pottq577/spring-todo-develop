@@ -6,7 +6,10 @@ import com.example.springtododevelop.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -58,12 +61,36 @@ public class UserService {
      * @param user_id 클라이언트 요청 유저 식별자
      * @return 조회된 유저 정보가 담겨있는 {@link UserResponseDto} 객체
      */
-    public UserResponseDto findById(Long user_id) {
+    public UserResponseDto findById(Long userId) {
 
-        Users findUser = userRepository.findByUserIdOrElseThrow(user_id);
+        Users findUser = userRepository.findByUserIdOrElseThrow(userId);
 
         return new UserResponseDto(findUser.getUserId(), findUser.getUsername(),
             findUser.getEmail(), findUser.getCreatedAt(), findUser.getUpdatedAt());
+
+    }
+
+    @Transactional
+    public void updateUser(Long userId, String username, String oldPassword, String newPassword,
+        String email) {
+
+        Users findUser = userRepository.findByUserIdOrElseThrow(userId);
+
+        if (!findUser.getPassword().equals(oldPassword)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+
+        if (username != null) {
+            findUser.setUsername(username);
+        }
+        if (newPassword != null) {
+            findUser.setPassword(newPassword);
+        }
+        if (email != null) {
+            findUser.setEmail(email);
+        }
+
+        userRepository.save(findUser);
 
     }
 

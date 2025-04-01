@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Entity
@@ -25,12 +26,15 @@ public class Users extends BaseEntity {
     private Long userId;
 
     @Column(nullable = false)
+    @Setter
     private String username;
 
     @Column(nullable = false)
+    @Setter
     private String password;
 
     @Column(nullable = false)
+    @Setter
     private String email;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
