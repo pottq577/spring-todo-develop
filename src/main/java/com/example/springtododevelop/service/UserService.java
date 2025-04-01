@@ -82,14 +82,11 @@ public class UserService {
      * @return 수정된 유저 정보가 반영된 {@link UserResponseDto} 객체
      */
     @Transactional
-    public UserResponseDto updateUser(
-        Long userId, String username, String oldPassword, String newPassword, String email) {
+    public UserResponseDto updateUser(Long userId, String username, String oldPassword,
+        String newPassword, String email) {
 
         Users findUser = userRepository.findByUserIdOrElseThrow(userId);
-
-        if (!findUser.getPassword().equals(oldPassword)) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-        }
+        checkPasswordMatchByUserId(findUser, oldPassword);
 
         if (username != null) {
             findUser.setUsername(username);
@@ -117,11 +114,16 @@ public class UserService {
     public void deleteUser(Long userId, UserDeleteRequestDto requestDto) {
 
         Users findUser = userRepository.findByUserIdOrElseThrow(userId);
+        checkPasswordMatchByUserId(findUser, requestDto.getPassword());
 
-        if (userRepository.checkPasswordMatchByUserId(findUser, requestDto.getPassword())) {
-            userRepository.deleteById(userId);
+        userRepository.deleteById(userId);
+
+    }
+
+    private void checkPasswordMatchByUserId(Users user, String password) {
+        if (!user.getPassword().equals(password)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "비밀번호가 일치하지 않습니다.");
         }
-
     }
 
 }

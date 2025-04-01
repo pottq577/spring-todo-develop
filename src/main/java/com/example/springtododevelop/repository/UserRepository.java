@@ -14,13 +14,4 @@ public interface UserRepository extends JpaRepository<Users, Long> {
 
     }
 
-    default boolean checkPasswordMatchByUserId(Users user, String password) {
-        if (!user.getPassword().equals(password)) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN,
-                "비밀번호가 일치하지 않습니다.");
-        }
-
-        return true;
-    }
-
 }
