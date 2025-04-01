@@ -20,6 +20,12 @@ public class UserController {
 
     private final UserService userService;
 
+    /**
+     * 유저 생성을 요청하는 메소드
+     *
+     * @param requestDto 사용자 요청 {@link UserCreateRequestDto} 객체
+     * @return 유저 정보가 담긴 {@link UserResponseDto} 객체
+     */
     @PostMapping
     public ResponseEntity<UserResponseDto> createUser(
         @RequestBody UserCreateRequestDto requestDto) {
@@ -32,9 +38,14 @@ public class UserController {
             );
 
         return new ResponseEntity<>(userResponseDto, HttpStatus.CREATED);
-
+        
     }
 
+    /**
+     * 전체 유저 조회를 요청하는 메소드
+     *
+     * @return 유저 정보가 담긴 {@link UserResponseDto} 객체 리스트
+     */
     @GetMapping
     public ResponseEntity<List<UserResponseDto>> findAllUsers() {
 

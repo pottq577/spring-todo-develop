@@ -14,6 +14,14 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    /**
+     * 유저 생성을 담당하는 메소드
+     *
+     * @param username 유저명
+     * @param password 비밀번호
+     * @param email    이메일
+     * @return 새롭게 생성된 유저 정보가 담겨있는 {@link UserResponseDto} 객체
+     */
     public UserResponseDto createUser(String username, String password, String email) {
 
         Users user = new Users(username, password, email);
@@ -24,6 +32,11 @@ public class UserService {
 
     }
 
+    /**
+     * DB에 저장된 모든 유저를 찾는 메소드
+     *
+     * @return 저장된 유저 정보가 담겨있는 {@link UserResponseDto} 객체 리스트
+     */
     public List<UserResponseDto> findAllUsers() {
 
         List<Users> user = userRepository.findAll();
