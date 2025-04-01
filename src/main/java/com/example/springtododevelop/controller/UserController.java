@@ -64,16 +64,17 @@ public class UserController {
     }
 
     @PatchMapping("/{userId}")
-    public ResponseEntity<Void> updateUser(
+    public ResponseEntity<UserResponseDto> updateUser(
         @PathVariable Long userId,
         @RequestBody UserUpdateRequestDto requestDto
     ) {
 
-        userService.updateUser(userId, requestDto.getUsername(), requestDto.getOldPassword(),
+        UserResponseDto updatedUser = userService.updateUser(userId, requestDto.getUsername(),
+            requestDto.getOldPassword(),
             requestDto.getNewPassword(), requestDto.getEmail());
 
-        return new ResponseEntity<>(HttpStatus.OK);
-        
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+
     }
 
 }

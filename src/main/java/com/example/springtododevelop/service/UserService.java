@@ -71,7 +71,8 @@ public class UserService {
     }
 
     @Transactional
-    public void updateUser(Long userId, String username, String oldPassword, String newPassword,
+    public UserResponseDto updateUser(Long userId, String username, String oldPassword,
+        String newPassword,
         String email) {
 
         Users findUser = userRepository.findByUserIdOrElseThrow(userId);
@@ -91,6 +92,9 @@ public class UserService {
         }
 
         userRepository.save(findUser);
+
+        return new UserResponseDto(findUser.getUserId(), findUser.getUsername(),
+            findUser.getEmail(), findUser.getCreatedAt(), findUser.getUpdatedAt());
 
     }
 
