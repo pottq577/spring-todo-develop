@@ -2,12 +2,14 @@ package com.example.springtododevelop.controller;
 
 import com.example.springtododevelop.dto.users.UserRequestDto;
 import com.example.springtododevelop.dto.users.UserResponseDto;
+import com.example.springtododevelop.dto.users.UserUpdateRequestDto;
 import com.example.springtododevelop.service.UserService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -59,6 +61,19 @@ public class UserController {
     @GetMapping("/{userId}")
     public ResponseEntity<UserResponseDto> findUserById(@PathVariable Long userId) {
         return new ResponseEntity<>(userService.findById(userId), HttpStatus.OK);
+    }
+
+    @PatchMapping("/{userId}")
+    public ResponseEntity<Void> updateUser(
+        @PathVariable Long userId,
+        @RequestBody UserUpdateRequestDto requestDto
+    ) {
+
+        userService.updateUser(userId, requestDto.getUsername(), requestDto.getOldPassword(),
+            requestDto.getNewPassword(), requestDto.getEmail());
+
+        return new ResponseEntity<>(HttpStatus.OK);
+        
     }
 
 }
