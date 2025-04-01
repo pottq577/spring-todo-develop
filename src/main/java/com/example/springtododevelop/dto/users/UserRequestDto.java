@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class UserCreateRequestDto {
+public class UserRequestDto {
 
     private final String username;
     private final String password;

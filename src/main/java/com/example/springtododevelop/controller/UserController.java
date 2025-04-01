@@ -1,6 +1,6 @@
 package com.example.springtododevelop.controller;
 
-import com.example.springtododevelop.dto.users.UserCreateRequestDto;
+import com.example.springtododevelop.dto.users.UserRequestDto;
 import com.example.springtododevelop.dto.users.UserResponseDto;
 import com.example.springtododevelop.service.UserService;
 import java.util.List;
@@ -24,12 +24,12 @@ public class UserController {
     /**
      * 유저 생성을 요청하는 메소드
      *
-     * @param requestDto 사용자 요청 {@link UserCreateRequestDto} 객체
+     * @param requestDto 사용자 요청 {@link UserRequestDto} 객체
      * @return 유저 정보가 담긴 {@link UserResponseDto} 객체
      */
     @PostMapping
     public ResponseEntity<UserResponseDto> createUser(
-        @RequestBody UserCreateRequestDto requestDto) {
+        @RequestBody UserRequestDto requestDto) {
 
         UserResponseDto userResponseDto =
             userService.createUser(
