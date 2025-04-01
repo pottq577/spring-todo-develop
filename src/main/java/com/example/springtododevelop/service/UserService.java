@@ -1,5 +1,6 @@
 package com.example.springtododevelop.service;
 
+import com.example.springtododevelop.dto.users.UserDeleteRequestDto;
 import com.example.springtododevelop.dto.users.UserResponseDto;
 import com.example.springtododevelop.entity.Users;
 import com.example.springtododevelop.repository.UserRepository;
@@ -104,6 +105,22 @@ public class UserService {
 
         return new UserResponseDto(findUser.getUserId(), findUser.getUsername(),
             findUser.getEmail(), findUser.getCreatedAt(), findUser.getUpdatedAt());
+
+    }
+
+    /**
+     * DB에서 userId와 일치하는 유저 삭제를 담당하는 메소드
+     *
+     * @param userId     유저 식별자
+     * @param requestDto 비밀번호가 담긴 {@link UserDeleteRequestDto} 객체
+     */
+    public void deleteUser(Long userId, UserDeleteRequestDto requestDto) {
+
+        Users findUser = userRepository.findByUserIdOrElseThrow(userId);
+
+        if (userRepository.checkPasswordMatchByUserId(findUser, requestDto.getPassword())) {
+            userRepository.deleteById(userId);
+        }
 
     }
 

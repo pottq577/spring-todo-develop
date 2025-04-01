@@ -1,5 +1,6 @@
 package com.example.springtododevelop.controller;
 
+import com.example.springtododevelop.dto.users.UserDeleteRequestDto;
 import com.example.springtododevelop.dto.users.UserRequestDto;
 import com.example.springtododevelop.dto.users.UserResponseDto;
 import com.example.springtododevelop.dto.users.UserUpdateRequestDto;
@@ -8,6 +9,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -87,6 +89,17 @@ public class UserController {
             requestDto.getNewPassword(), requestDto.getEmail());
 
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Void> deleteUser(
+        @PathVariable Long userId,
+        @RequestBody UserDeleteRequestDto requestDto) {
+
+        userService.deleteUser(userId, requestDto);
+
+        return new ResponseEntity<>(HttpStatus.OK);
 
     }
 
