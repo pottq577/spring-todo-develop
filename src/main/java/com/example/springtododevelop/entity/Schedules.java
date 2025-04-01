@@ -29,6 +29,9 @@ public class Schedules extends BaseEntity {
     private Users user;
 
     @Column(nullable = false)
-    private String todo;
+    private String title;
+
+    @Column(nullable = false)
+    private String contents;
 
 }
