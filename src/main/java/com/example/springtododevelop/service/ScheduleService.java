@@ -93,4 +93,20 @@ public class ScheduleService {
 
     }
 
+    /**
+     * DB에서 scheduleId 와 일치하는 일정 삭제를 담당하는 메소드
+     *
+     * @param scheduleId 일정 식별자
+     * @param password   사용자 요청 객체의 비밀번호
+     */
+    public void deleteSchedule(Long scheduleId, String password) {
+
+        Schedules findSchedules = scheduleRepository.findByScheduleIdOrElseThrow(scheduleId);
+        Users user = findSchedules.getUser();
+        userService.validateUserPassword(user, password);
+
+        scheduleRepository.deleteById(scheduleId);
+
+    }
+
 }

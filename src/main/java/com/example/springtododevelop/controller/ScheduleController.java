@@ -1,5 +1,6 @@
 package com.example.springtododevelop.controller;
 
+import com.example.springtododevelop.dto.schedules.ScheduleDeleteRequestDto;
 import com.example.springtododevelop.dto.schedules.ScheduleRequestDto;
 import com.example.springtododevelop.dto.schedules.ScheduleResponseDto;
 import com.example.springtododevelop.dto.schedules.ScheduleUpdateRequestDto;
@@ -8,6 +9,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -88,6 +90,25 @@ public class ScheduleController {
         );
 
         return new ResponseEntity<>(updatedSchedule, HttpStatus.OK);
+
+    }
+
+    /**
+     * 일정 식별자에 해당하는 일정을 삭제하도록 요청하는 메소드
+     *
+     * @param scheduleId 일정 식별자
+     * @param requestDto 클라이언트 요청 {@link ScheduleDeleteRequestDto} 객체
+     * @return 성공 시 200 OK 반환
+     */
+    @DeleteMapping("/{scheduleId}")
+    public ResponseEntity<Void> deleteSchedule(
+        @PathVariable Long scheduleId,
+        @RequestBody ScheduleDeleteRequestDto requestDto
+    ) {
+
+        scheduleService.deleteSchedule(scheduleId, requestDto.getPassword());
+
+        return new ResponseEntity<>(HttpStatus.OK);
 
     }
 
