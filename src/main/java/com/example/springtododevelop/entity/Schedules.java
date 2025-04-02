@@ -11,6 +11,7 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Entity
@@ -24,14 +25,20 @@ public class Schedules extends BaseEntity {
     @Column(name = "schedule_id")
     private Long scheduleId;
 
+    @Column(nullable = false)
+    private String title;
+
+    @Column(columnDefinition = "longtext", nullable = false)
+    private String contents;
+
+    @Setter
     @ManyToOne // N:1
     @JoinColumn(name = "user_id", nullable = false) // FK
     private Users user;
 
-    @Column(nullable = false)
-    private String title;
-
-    @Column(nullable = false)
-    private String contents;
+    public Schedules(String title, String contents) {
+        this.title = title;
+        this.contents = contents;
+    }
 
 }

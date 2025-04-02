@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ScheduleRequestDto {
 
+    private final Long userId;
     private final String title;
     private final String contents;
 
