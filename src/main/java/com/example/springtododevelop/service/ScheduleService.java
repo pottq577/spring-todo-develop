@@ -15,6 +15,14 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final UserRepository userRepository;
 
+    /**
+     * 일정 생성을 담당하는 메소드
+     *
+     * @param userId   유저 식별자 id
+     * @param title    일정 제목
+     * @param contents 일정 내용
+     * @return 유저 식별자가 포함된 일정 정보가 담긴 {@link ScheduleResponseDto} 객체
+     */
     public ScheduleResponseDto createSchedule(Long userId, String title, String contents) {
 
         Users findUser = userRepository.findByUserIdOrElseThrow(userId);
@@ -34,5 +42,6 @@ public class ScheduleService {
         );
 
     }
+
 
 }
