@@ -50,4 +50,15 @@ public class ScheduleService {
             .collect(Collectors.toList());
     }
 
+    /**
+     * DB에서 scheduleId 와 일치하는 일정을 조회하는 메소드
+     *
+     * @param scheduleId 클라이언트 요청 일정 식별자
+     * @return 조회된 일정 정보가 담겨있는 {@link ScheduleResponseDto} 객체
+     */
+    public ScheduleResponseDto findById(Long scheduleId) {
+        return ScheduleResponseDto.toDto(
+            scheduleRepository.findByScheduleIdOrElseThrow(scheduleId));
+    }
+
 }
