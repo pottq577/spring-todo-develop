@@ -2,6 +2,7 @@ package com.example.springtododevelop.controller;
 
 import com.example.springtododevelop.dto.schedules.ScheduleRequestDto;
 import com.example.springtododevelop.dto.schedules.ScheduleResponseDto;
+import com.example.springtododevelop.dto.schedules.ScheduleUpdateRequestDto;
 import com.example.springtododevelop.service.ScheduleService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -79,11 +80,11 @@ public class ScheduleController {
     @PatchMapping("/{scheduleId}")
     public ResponseEntity<ScheduleResponseDto> updateSchedule(
         @PathVariable Long scheduleId,
-        @RequestBody ScheduleRequestDto requestDto
+        @RequestBody ScheduleUpdateRequestDto requestDto
     ) {
 
         ScheduleResponseDto updatedSchedule = scheduleService.updateSchedule(
-            scheduleId, requestDto.getTitle(), requestDto.getContents()
+            scheduleId, requestDto.getPassword(), requestDto.getTitle(), requestDto.getContents()
         );
 
         return new ResponseEntity<>(updatedSchedule, HttpStatus.OK);

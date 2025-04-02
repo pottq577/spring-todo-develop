@@ -73,12 +73,12 @@ public class ScheduleService {
      * @return 수정된 일정 정보가 반영된 {@link ScheduleResponseDto} 객체
      */
     @Transactional
-    public ScheduleResponseDto updateSchedule(Long scheduleId, String title,
+    public ScheduleResponseDto updateSchedule(Long scheduleId, String password, String title,
         String contents) {
 
         Schedules findSchedules = scheduleRepository.findByScheduleIdOrElseThrow(scheduleId);
         Users user = findSchedules.getUser();
-        userService.validateUserPassword(user, user.getPassword());
+        userService.validateUserPassword(user, password);
 
         if (title != null) {
             findSchedules.setTitle(title);
