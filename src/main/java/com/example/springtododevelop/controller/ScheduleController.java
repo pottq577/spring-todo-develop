@@ -3,9 +3,11 @@ package com.example.springtododevelop.controller;
 import com.example.springtododevelop.dto.schedules.ScheduleRequestDto;
 import com.example.springtododevelop.dto.schedules.ScheduleResponseDto;
 import com.example.springtododevelop.service.ScheduleService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +39,20 @@ public class ScheduleController {
             );
 
         return new ResponseEntity<>(scheduleResponseDto, HttpStatus.CREATED);
+
+    }
+
+    /**
+     * 전체 일정 조회를 요청하는 메소드
+     *
+     * @return 일정 정보가 담긴 {@link ScheduleResponseDto} 객체 리스트
+     */
+    @GetMapping
+    public ResponseEntity<List<ScheduleResponseDto>> findAllSchedules() {
+
+        List<ScheduleResponseDto> scheduleResponseDtoList = scheduleService.findAllSchedules();
+
+        return new ResponseEntity<>(scheduleResponseDtoList, HttpStatus.OK);
 
     }
 
