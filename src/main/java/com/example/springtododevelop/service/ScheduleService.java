@@ -66,8 +66,8 @@ public class ScheduleService {
     /**
      * DB에에서 scheduleId 와 일치하는 일정 정보 수정을 담당하는 메소드
      *
-     * @param userId     유저 식별자
      * @param scheduleId 일정 식별자
+     * @param password   유저 비밀번호
      * @param title      일정 제목
      * @param contents   일정 내용
      * @return 수정된 일정 정보가 반영된 {@link ScheduleResponseDto} 객체
