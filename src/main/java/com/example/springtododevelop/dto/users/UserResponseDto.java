@@ -1,5 +1,6 @@
 package com.example.springtododevelop.dto.users;
 
+import com.example.springtododevelop.entity.Users;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -13,5 +14,15 @@ public class UserResponseDto {
     private final String email;
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
+
+    public static UserResponseDto toDto(Users users) {
+        return new UserResponseDto(
+            users.getUserId(),
+            users.getUsername(),
+            users.getEmail(),
+            users.getCreatedAt(),
+            users.getUpdatedAt()
+        );
+    }
 
 }
