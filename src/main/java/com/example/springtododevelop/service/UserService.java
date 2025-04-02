@@ -1,6 +1,5 @@
 package com.example.springtododevelop.service;
 
-import com.example.springtododevelop.dto.users.UserDeleteRequestDto;
 import com.example.springtododevelop.dto.users.UserResponseDto;
 import com.example.springtododevelop.entity.Users;
 import com.example.springtododevelop.repository.UserRepository;
@@ -87,13 +86,13 @@ public class UserService {
     /**
      * DB에서 userId와 일치하는 유저 삭제를 담당하는 메소드
      *
-     * @param userId     유저 식별자
-     * @param requestDto 비밀번호가 담긴 {@link UserDeleteRequestDto} 객체
+     * @param userId   유저 식별자
+     * @param password 클라이언트 요청 객체의 비밀번호
      */
-    public void deleteUser(Long userId, UserDeleteRequestDto requestDto) {
+    public void deleteUser(Long userId, String password) {
 
         Users findUser = userRepository.findByUserIdOrElseThrow(userId);
-        validateUserPassword(findUser, requestDto.getPassword());
+        validateUserPassword(findUser, password);
 
         userRepository.deleteById(userId);
 

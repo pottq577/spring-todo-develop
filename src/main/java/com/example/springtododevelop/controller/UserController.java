@@ -104,7 +104,7 @@ public class UserController {
         @PathVariable Long userId,
         @RequestBody UserDeleteRequestDto requestDto) {
 
-        userService.deleteUser(userId, requestDto);
+        userService.deleteUser(userId, requestDto.getPassword());
 
         return new ResponseEntity<>(HttpStatus.OK);
 
