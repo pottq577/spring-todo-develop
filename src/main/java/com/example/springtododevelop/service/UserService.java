@@ -105,7 +105,7 @@ public class UserService {
      * @param user     유저 정보가 담긴 {@link Users} 객체
      * @param password 클라이언트 요청 비밀번호
      */
-    private void validateUserPassword(Users user, String password) {
+    public void validateUserPassword(Users user, String password) {
         if (!user.getPassword().equals(password)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "비밀번호가 일치하지 않습니다.");
         }
