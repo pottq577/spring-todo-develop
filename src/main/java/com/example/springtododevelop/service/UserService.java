@@ -4,8 +4,8 @@ import com.example.springtododevelop.dto.users.UserDeleteRequestDto;
 import com.example.springtododevelop.dto.users.UserResponseDto;
 import com.example.springtododevelop.entity.Users;
 import com.example.springtododevelop.repository.UserRepository;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -27,13 +27,7 @@ public class UserService {
      * @return 새롭게 생성된 유저 정보가 담겨있는 {@link UserResponseDto} 객체
      */
     public UserResponseDto createUser(String username, String password, String email) {
-
-        Users user = new Users(username, password, email);
-        Users createdUser = userRepository.save(user);
-
-        return new UserResponseDto(createdUser.getUserId(), createdUser.getUsername(),
-            createdUser.getEmail(), createdUser.getCreatedAt(), createdUser.getUpdatedAt());
-
+        return UserResponseDto.toDto(userRepository.save(new Users(username, password, email)));
     }
 
     /**
@@ -42,18 +36,9 @@ public class UserService {
      * @return 저장된 유저 정보가 담겨있는 {@link UserResponseDto} 객체 리스트
      */
     public List<UserResponseDto> findAllUsers() {
-
-        List<Users> user = userRepository.findAll();
-        List<UserResponseDto> userResponseDtoList = new ArrayList<>();
-
-        for (Users users : user) {
-            userResponseDtoList.add(
-                new UserResponseDto(users.getUserId(), users.getUsername(), users.getPassword(),
-                    users.getCreatedAt(), users.getUpdatedAt()));
-        }
-
-        return userResponseDtoList;
-
+        return userRepository.findAll().stream()
+            .map(UserResponseDto::toDto)
+            .collect(Collectors.toList());
     }
 
     /**
@@ -63,12 +48,7 @@ public class UserService {
      * @return 조회된 유저 정보가 담겨있는 {@link UserResponseDto} 객체
      */
     public UserResponseDto findById(Long userId) {
-
-        Users findUser = userRepository.findByUserIdOrElseThrow(userId);
-
-        return new UserResponseDto(findUser.getUserId(), findUser.getUsername(),
-            findUser.getEmail(), findUser.getCreatedAt(), findUser.getUpdatedAt());
-
+        return UserResponseDto.toDto(userRepository.findByUserIdOrElseThrow(userId));
     }
 
     /**
@@ -100,8 +80,7 @@ public class UserService {
 
         userRepository.save(findUser);
 
-        return new UserResponseDto(findUser.getUserId(), findUser.getUsername(),
-            findUser.getEmail(), findUser.getCreatedAt(), findUser.getUpdatedAt());
+        return UserResponseDto.toDto(findUser);
 
     }
 
