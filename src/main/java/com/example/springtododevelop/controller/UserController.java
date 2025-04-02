@@ -92,6 +92,13 @@ public class UserController {
 
     }
 
+    /**
+     * 유저 식별자에 해당하는 유저를 삭제하도록 요청하는 메소드
+     *
+     * @param userId     유저 식별자
+     * @param requestDto 클라이언트 요청 {@link UserDeleteRequestDto} 객체
+     * @return 성공 시 200 OK 반환
+     */
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> deleteUser(
         @PathVariable Long userId,
