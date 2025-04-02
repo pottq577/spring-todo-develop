@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -66,6 +67,27 @@ public class ScheduleController {
     @GetMapping("/{scheduleId}")
     public ResponseEntity<ScheduleResponseDto> findScheduleById(@PathVariable Long scheduleId) {
         return new ResponseEntity<>(scheduleService.findById(scheduleId), HttpStatus.OK);
+    }
+
+    /**
+     * 일정 식별자에 해당하는 일정을 수정하도록 요청하는 메소드
+     *
+     * @param scheduleId 일정 식별자
+     * @param requestDto 클라이언트 요청 {@link ScheduleRequestDto} 객체
+     * @return 수정이 완료된 일정 정보가 담긴 {@link ScheduleRequestDto} 객체
+     */
+    @PatchMapping("/{scheduleId}")
+    public ResponseEntity<ScheduleResponseDto> updateSchedule(
+        @PathVariable Long scheduleId,
+        @RequestBody ScheduleRequestDto requestDto
+    ) {
+
+        ScheduleResponseDto updatedSchedule = scheduleService.updateSchedule(
+            scheduleId, requestDto.getTitle(), requestDto.getContents()
+        );
+
+        return new ResponseEntity<>(updatedSchedule, HttpStatus.OK);
+
     }
 
 }

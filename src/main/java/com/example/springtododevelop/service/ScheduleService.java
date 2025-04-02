@@ -9,11 +9,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class ScheduleService {
 
+    private final UserService userService;
     private final ScheduleRepository scheduleRepository;
     private final UserRepository userRepository;
 
@@ -59,6 +61,36 @@ public class ScheduleService {
     public ScheduleResponseDto findById(Long scheduleId) {
         return ScheduleResponseDto.toDto(
             scheduleRepository.findByScheduleIdOrElseThrow(scheduleId));
+    }
+
+    /**
+     * DB에에서 scheduleId 와 일치하는 일정 정보 수정을 담당하는 메소드
+     *
+     * @param userId     유저 식별자
+     * @param scheduleId 일정 식별자
+     * @param title      일정 제목
+     * @param contents   일정 내용
+     * @return 수정된 일정 정보가 반영된 {@link ScheduleResponseDto} 객체
+     */
+    @Transactional
+    public ScheduleResponseDto updateSchedule(Long scheduleId, String title,
+        String contents) {
+
+        Schedules findSchedules = scheduleRepository.findByScheduleIdOrElseThrow(scheduleId);
+        Users user = findSchedules.getUser();
+        userService.validateUserPassword(user, user.getPassword());
+
+        if (title != null) {
+            findSchedules.setTitle(title);
+        }
+        if (contents != null) {
+            findSchedules.setContents(contents);
+        }
+
+        scheduleRepository.save(findSchedules);
+
+        return ScheduleResponseDto.toDto(findSchedules);
+
     }
 
 }
