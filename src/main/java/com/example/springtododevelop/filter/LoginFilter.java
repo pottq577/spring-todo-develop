@@ -9,13 +9,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import org.springframework.http.HttpStatus;
 import org.springframework.util.PatternMatchUtils;
-import org.springframework.web.server.ResponseStatusException;
 
 public class LoginFilter implements Filter {
 
-    private static final String[] WHITE_LIST = {"/auth/signup", "/auth/login", "/api/users/create"};
+    private static final String[] WHITE_LIST = {"/auth/login", "/api/users/create"};
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
@@ -35,7 +33,8 @@ public class LoginFilter implements Filter {
         HttpSession session = httpRequest.getSession(false);
         if (session == null || session.getAttribute("userId") == null) {
             httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "로그인을 해주세요.");
+//            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "로그인을 해주세요.");
+            return;
         }
 
         filterChain.doFilter(request, response);

@@ -44,7 +44,7 @@ public class AuthController {
 
         if (loginUser != null) {
             HttpSession session = request.getSession();
-            session.setAttribute("loginUser", loginUser);
+            session.setAttribute("userId", loginUser);
             session.setMaxInactiveInterval(60 * 30);
         }
 
