@@ -78,8 +78,6 @@ public class UserService {
             findUser.setEmail(email);
         }
 
-        userRepository.save(findUser);
-
         return UserResponseDto.toDto(findUser);
 
     }
@@ -90,6 +88,7 @@ public class UserService {
      * @param userId   유저 식별자
      * @param password 클라이언트 요청 객체의 비밀번호
      */
+    @Transactional
     public void deleteUser(Long userId, String password) {
 
         Users findUser = userRepository.findByUserIdOrElseThrow(userId);
