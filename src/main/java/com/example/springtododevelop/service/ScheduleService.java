@@ -87,8 +87,6 @@ public class ScheduleService {
             findSchedules.setContents(contents);
         }
 
-        scheduleRepository.save(findSchedules);
-
         return ScheduleResponseDto.toDto(findSchedules);
 
     }
@@ -99,6 +97,7 @@ public class ScheduleService {
      * @param scheduleId 일정 식별자
      * @param password   클라이언트 요청 객체의 비밀번호
      */
+    @Transactional
     public void deleteSchedule(Long scheduleId, String password) {
 
         Schedules findSchedules = scheduleRepository.findByScheduleIdOrElseThrow(scheduleId);
