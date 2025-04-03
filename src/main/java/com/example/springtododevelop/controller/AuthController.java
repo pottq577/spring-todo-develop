@@ -33,9 +33,7 @@ public class AuthController {
      * @return 로그인 정보가 담긴 {@link LoginResponseDto} 객체
      */
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDto> login(
-        ServletRequest servletRequest
-    ) {
+    public ResponseEntity<LoginResponseDto> login(ServletRequest servletRequest) {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
 
