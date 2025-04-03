@@ -1,5 +1,6 @@
 package com.example.springtododevelop.service;
 
+import com.example.springtododevelop.dto.auth.LoginResponseDto;
 import com.example.springtododevelop.dto.users.UserResponseDto;
 import com.example.springtododevelop.entity.Users;
 import com.example.springtododevelop.repository.UserRepository;
@@ -95,6 +96,22 @@ public class UserService {
         validateUserPassword(findUser, password);
 
         userRepository.deleteById(userId);
+
+    }
+
+    /**
+     * DB에서 email 과 일치하는 유저를 찾는 메소드
+     *
+     * @param email    유저 이메일
+     * @param password 유저 비밀번호
+     * @return
+     */
+    public LoginResponseDto findByEmail(String email, String password) {
+
+        Users user = userRepository.findByEmailOrElseThrow(email);
+        validateUserPassword(user, password);
+
+        return LoginResponseDto.toDto(user);
 
     }
 
