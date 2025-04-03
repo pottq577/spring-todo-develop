@@ -104,7 +104,7 @@ public class UserService {
      *
      * @param email    유저 이메일
      * @param password 유저 비밀번호
-     * @return
+     * @return 조회된 유저 정보가 담겨있는 {@link LoginResponseDto} 객체
      */
     public LoginResponseDto findByEmail(String email, String password) {
 
