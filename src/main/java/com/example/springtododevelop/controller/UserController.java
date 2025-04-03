@@ -100,7 +100,7 @@ public class UserController {
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> deleteUser(
         @PathVariable Long userId,
-        @RequestBody UserDeleteRequestDto requestDto) {
+        @RequestBody @Valid UserDeleteRequestDto requestDto) {
 
         userService.deleteUser(userId, requestDto.getPassword());
 
