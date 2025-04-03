@@ -31,7 +31,7 @@ public class UserController {
      * @param requestDto 사용자 요청 {@link UserRequestDto} 객체
      * @return 유저 정보가 담긴 {@link UserResponseDto} 객체
      */
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<UserResponseDto> createUser(
         @RequestBody UserRequestDto requestDto) {
 
@@ -51,7 +51,11 @@ public class UserController {
      */
     @GetMapping
     public ResponseEntity<List<UserResponseDto>> findAllUsers() {
-        return new ResponseEntity<>(userService.findAllUsers(), HttpStatus.OK);
+
+        List<UserResponseDto> users = userService.findAllUsers();
+
+        return new ResponseEntity<>(users, HttpStatus.OK);
+
     }
 
     /**
@@ -77,10 +81,9 @@ public class UserController {
         @PathVariable Long userId,
         @RequestBody UserUpdateRequestDto requestDto) {
 
-        UserResponseDto updatedUser = userService.updateUser(
-            userId, requestDto.getUsername(), requestDto.getOldPassword(),
-            requestDto.getNewPassword(), requestDto.getEmail()
-        );
+        UserResponseDto updatedUser = userService.updateUser(userId, requestDto.getUsername(),
+            requestDto.getOldPassword(),
+            requestDto.getNewPassword(), requestDto.getEmail());
 
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
 
@@ -103,6 +106,5 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
-
 
 }
