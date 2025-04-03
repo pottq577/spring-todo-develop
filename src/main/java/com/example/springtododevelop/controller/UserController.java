@@ -35,12 +35,10 @@ public class UserController {
     public ResponseEntity<UserResponseDto> createUser(
         @RequestBody UserRequestDto requestDto) {
 
-        UserResponseDto userResponseDto =
-            userService.createUser(
-                requestDto.getUsername(),
-                requestDto.getPassword(),
-                requestDto.getEmail()
-            );
+        UserResponseDto userResponseDto = userService.createUser(
+            requestDto.getUsername(),
+            requestDto.getPassword(),
+            requestDto.getEmail());
 
         return new ResponseEntity<>(userResponseDto, HttpStatus.CREATED);
 
@@ -53,11 +51,7 @@ public class UserController {
      */
     @GetMapping
     public ResponseEntity<List<UserResponseDto>> findAllUsers() {
-
-        List<UserResponseDto> users = userService.findAllUsers();
-
-        return new ResponseEntity<>(users, HttpStatus.OK);
-
+        return new ResponseEntity<>(userService.findAllUsers(), HttpStatus.OK);
     }
 
     /**
@@ -81,12 +75,12 @@ public class UserController {
     @PatchMapping("/{userId}")
     public ResponseEntity<UserResponseDto> updateUser(
         @PathVariable Long userId,
-        @RequestBody UserUpdateRequestDto requestDto
-    ) {
+        @RequestBody UserUpdateRequestDto requestDto) {
 
-        UserResponseDto updatedUser = userService.updateUser(userId, requestDto.getUsername(),
-            requestDto.getOldPassword(),
-            requestDto.getNewPassword(), requestDto.getEmail());
+        UserResponseDto updatedUser = userService.updateUser(
+            userId, requestDto.getUsername(), requestDto.getOldPassword(),
+            requestDto.getNewPassword(), requestDto.getEmail()
+        );
 
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
 
@@ -109,5 +103,6 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
+
 
 }
