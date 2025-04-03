@@ -1,6 +1,5 @@
 package com.example.springtododevelop.controller;
 
-import com.example.springtododevelop.dto.auth.LoginRequestDto;
 import com.example.springtododevelop.dto.auth.LoginResponseDto;
 import com.example.springtododevelop.service.AuthService;
 import com.example.springtododevelop.service.UserService;
@@ -10,7 +9,6 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,9 +26,14 @@ public class AuthController {
 //
 //    }
 
+    /**
+     * 로그인을 요청하는 메소드
+     *
+     * @param servletRequest 로그인 요청 정보가 담긴 {@link ServletRequest} 객체
+     * @return 로그인 정보가 담긴 {@link LoginResponseDto} 객체
+     */
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login(
-        @ModelAttribute LoginRequestDto requestDto,
         ServletRequest servletRequest
     ) {
 
