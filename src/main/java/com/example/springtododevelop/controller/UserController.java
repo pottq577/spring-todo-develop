@@ -5,6 +5,7 @@ import com.example.springtododevelop.dto.users.UserRequestDto;
 import com.example.springtododevelop.dto.users.UserResponseDto;
 import com.example.springtododevelop.dto.users.UserUpdateRequestDto;
 import com.example.springtododevelop.service.UserService;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,7 @@ public class UserController {
      */
     @PostMapping("/create")
     public ResponseEntity<UserResponseDto> createUser(
-        @RequestBody UserRequestDto requestDto) {
+        @RequestBody @Valid UserRequestDto requestDto) {
 
         UserResponseDto userResponseDto = userService.createUser(
             requestDto.getUsername(),
@@ -79,7 +80,7 @@ public class UserController {
     @PatchMapping("/{userId}")
     public ResponseEntity<UserResponseDto> updateUser(
         @PathVariable Long userId,
-        @RequestBody UserUpdateRequestDto requestDto) {
+        @RequestBody @Valid UserUpdateRequestDto requestDto) {
 
         UserResponseDto updatedUser = userService.updateUser(userId, requestDto.getUsername(),
             requestDto.getOldPassword(),

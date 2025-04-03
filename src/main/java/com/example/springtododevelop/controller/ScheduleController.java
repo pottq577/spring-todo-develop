@@ -5,6 +5,7 @@ import com.example.springtododevelop.dto.schedules.ScheduleRequestDto;
 import com.example.springtododevelop.dto.schedules.ScheduleResponseDto;
 import com.example.springtododevelop.dto.schedules.ScheduleUpdateRequestDto;
 import com.example.springtododevelop.service.ScheduleService;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,7 @@ public class ScheduleController {
      */
     @PostMapping
     public ResponseEntity<ScheduleResponseDto> createSchedule(
-        @RequestBody ScheduleRequestDto requestDto
+        @RequestBody @Valid ScheduleRequestDto requestDto
     ) {
 
         ScheduleResponseDto scheduleResponseDto =
@@ -82,7 +83,7 @@ public class ScheduleController {
     @PatchMapping("/{scheduleId}")
     public ResponseEntity<ScheduleResponseDto> updateSchedule(
         @PathVariable Long scheduleId,
-        @RequestBody ScheduleUpdateRequestDto requestDto
+        @RequestBody @Valid ScheduleUpdateRequestDto requestDto
     ) {
 
         ScheduleResponseDto updatedSchedule = scheduleService.updateSchedule(
