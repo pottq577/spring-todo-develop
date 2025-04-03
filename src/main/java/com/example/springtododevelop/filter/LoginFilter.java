@@ -13,19 +13,20 @@ import org.springframework.util.PatternMatchUtils;
 
 public class LoginFilter implements Filter {
 
-    private static final String[] WHITE_LIST = {"/auth/login", "/api/users/create"};
+    private static final String[] WHITE_LIST = { "/auth/login", "/api/users" };
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
-        throws IOException, ServletException {
+            throws IOException, ServletException {
 
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
         String requestURI = httpRequest.getRequestURI();
+        String method = httpRequest.getMethod();
 
         // 회원가입, 로그인 시 필터 제외
-        if (isWhiteList(requestURI)) {
+        if (isWhiteList(requestURI, method)) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -33,7 +34,7 @@ public class LoginFilter implements Filter {
         HttpSession session = httpRequest.getSession(false);
         if (session == null || session.getAttribute("userId") == null) {
             httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-//            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "로그인을 해주세요.");
+            // throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "로그인을 해주세요.");
             return;
         }
 
@@ -41,7 +42,10 @@ public class LoginFilter implements Filter {
 
     }
 
-    private boolean isWhiteList(String requestURI) {
+    private boolean isWhiteList(String requestURI, String method) {
+        if (requestURI.equals("/api/users") && method.equals("POST")) {
+            return true;
+        }
         return PatternMatchUtils.simpleMatch(WHITE_LIST, requestURI);
     }
 

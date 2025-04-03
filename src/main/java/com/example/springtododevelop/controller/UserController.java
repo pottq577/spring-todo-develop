@@ -32,7 +32,7 @@ public class UserController {
      * @param requestDto 사용자 요청 {@link UserRequestDto} 객체
      * @return 유저 정보가 담긴 {@link UserResponseDto} 객체
      */
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<UserResponseDto> createUser(
         @RequestBody @Valid UserRequestDto requestDto) {
 
