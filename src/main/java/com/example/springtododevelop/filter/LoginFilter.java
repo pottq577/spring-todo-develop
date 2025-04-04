@@ -1,5 +1,7 @@
 package com.example.springtododevelop.filter;
 
+import com.example.springtododevelop.exception.BusinessException;
+import com.example.springtododevelop.exception.ExceptionCode;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -13,11 +15,11 @@ import org.springframework.util.PatternMatchUtils;
 
 public class LoginFilter implements Filter {
 
-    private static final String[] WHITE_LIST = { "/auth/login", "/api/users" };
+    private static final String[] WHITE_LIST = {"/auth/login", "/api/users"};
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
-            throws IOException, ServletException {
+        throws IOException, ServletException {
 
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
@@ -33,9 +35,7 @@ public class LoginFilter implements Filter {
 
         HttpSession session = httpRequest.getSession(false);
         if (session == null || session.getAttribute("userId") == null) {
-            httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            // throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "로그인을 해주세요.");
-            return;
+            throw new BusinessException(ExceptionCode.NOT_LOGIN_ERROR);
         }
 
         filterChain.doFilter(request, response);

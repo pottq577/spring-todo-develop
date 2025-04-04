@@ -2,11 +2,11 @@ package com.example.springtododevelop.service;
 
 import com.example.springtododevelop.dto.auth.LoginResponseDto;
 import com.example.springtododevelop.entity.Users;
+import com.example.springtododevelop.exception.BusinessException;
+import com.example.springtododevelop.exception.ExceptionCode;
 import com.example.springtododevelop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +29,7 @@ public class AuthService {
 
     private void validateUserPassword(Users user, String password) {
         if (!user.getPassword().equals(password)) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "비밀번호가 일치하지 않습니다.");
+            throw new BusinessException(ExceptionCode.PASSWORD_INVALID);
         }
     }
 
