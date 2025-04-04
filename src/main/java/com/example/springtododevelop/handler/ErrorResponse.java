@@ -20,7 +20,7 @@ public class ErrorResponse {
 
     private String reason;
 
-    public ErrorResponse(ExceptionCode code, String reason) {
+    public ErrorResponse(final ExceptionCode code, final String reason) {
         this.message = code.getMessage();
         this.status = code.getStatus();
         this.code = code.getCode();
