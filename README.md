@@ -144,6 +144,33 @@ spriing-todo-develop/
 
 # 📝 프로젝트 명세
 
+## SQL
+
+```sql
+CREATE TABLE users
+(
+    user_id   BIGINT       NOT NULL AUTO_INCREMENT COMMENT '유저 식별자 ID',
+    username  VARCHAR(50)  NOT NULL COMMENT '유저 이름',
+    password  VARCHAR(255) NOT NULL COMMENT '유저 비밀번호',
+    email     VARCHAR(255) NOT NULL COMMENT '유저 이메일',
+    createdAt TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '유저 생성 날짜',
+    updatedAt TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '유저 수정 날짜',
+    PRIMARY KEY (user_id)
+);
+
+CREATE TABLE schedules
+(
+    schedule_id BIGINT      NOT NULL AUTO_INCREMENT COMMENT '일정 식별자 ID',
+    user_id     BIGINT      NOT NULL COMMENT '유저 식별자 ID',
+    title       VARCHAR(50) NOT NULL COMMENT '일정 제목',
+    contents    TEXT        NOT NULL COMMENT '일정 내용',
+    createdAt   TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '일정 등록 날짜',
+    updatedAt   TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '일정 수정 날짜',
+    PRIMARY KEY (schedule_id),
+    FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
+);
+```
+
 ## ERD
 
 ### users 테이블
@@ -532,7 +559,15 @@ spriing-todo-develop/
 
 ### 느낀 점
 
+JDBC보다 JPA를 쓰는 게 훨씬 편하다고 느꼈습니다.
+
+쿠키/세션에 발을 한 번 담궜다는 걸로 만족을 하고 있습니다.
+
 ### 아쉬운 점
+
+코드를 작성하면서 이론적/개념적으로 이해하고 사용한 부분이 적어서 아쉽습니다.
+
+도메인 별로 디렉토리 구조를 설계하지 않았던 것도 이제보니 조금 아쉽게 느껴졌습니다.
 
 <br/>
 
